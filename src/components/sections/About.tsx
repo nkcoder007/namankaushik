@@ -1,20 +1,14 @@
-import { existsSync } from "node:fs";
-import path from "node:path";
-
 import Image from "next/image";
 
 import { SectionShell } from "@/components/sections/SectionShell";
 import { about, portrait, profile } from "@/data/profile";
 
-const portraitFile = path.join(process.cwd(), "public", portrait.src);
 const portraitFilename = portrait.src.split("/").pop();
 
 // 27rem portrait + 3.5rem column gap + 38rem text at xl, so the composition box matches its content.
 const compositionWidth = "max-w-[68.5rem]";
 
 export function About() {
-  const hasPortrait = existsSync(portraitFile);
-
   return (
     <SectionShell
       id="about"
@@ -42,64 +36,19 @@ export function About() {
           </figcaption>
 
           <div className="relative aspect-[4/5] w-full bg-bg-subtle">
-            {hasPortrait ? (
-              <Image
-                src={portrait.src}
-                alt={portrait.alt}
-                fill
-                sizes="(min-width: 1280px) 27rem, (min-width: 1024px) 25rem, (min-width: 768px) 17rem, 22rem"
-                className="object-cover"
-              />
-            ) : (
-              <div className="relative flex h-full flex-col items-center justify-center px-6 text-center">
-                <span
-                  aria-hidden="true"
-                  className="absolute top-3 left-3 size-3 border-t border-l border-border-strong"
-                />
-                <span
-                  aria-hidden="true"
-                  className="absolute top-3 right-3 size-3 border-t border-r border-border-strong"
-                />
-                <span
-                  aria-hidden="true"
-                  className="absolute bottom-3 left-3 size-3 border-b border-l border-border-strong"
-                />
-                <span
-                  aria-hidden="true"
-                  className="absolute right-3 bottom-3 size-3 border-r border-b border-border-strong"
-                />
-
-                <span
-                  aria-hidden="true"
-                  className="flex size-12 items-center justify-center border border-border-strong bg-surface text-fg-muted"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    className="size-5"
-                  >
-                    <circle cx="12" cy="9" r="3.2" />
-                    <path d="M5.8 18.5a6.4 6.4 0 0 1 12.4 0" />
-                  </svg>
-                </span>
-
-                <p className="mt-4 font-mono text-xs tracking-[0.18em] text-fg-secondary uppercase">
-                  Portrait
-                </p>
-                <p className="mt-1 font-mono text-[11px] text-fg-muted">awaiting image</p>
-
-                <span aria-hidden="true" className="absolute inset-x-6 bottom-6 h-px bg-border" />
-              </div>
-            )}
+            <Image
+              src={portrait.src}
+              alt={portrait.alt}
+              fill
+              sizes="(min-width: 1280px) 27rem, (min-width: 1024px) 25rem, (min-width: 768px) 17rem, 22rem"
+              className="object-cover"
+            />
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-border px-3.5 py-2 font-mono text-[11px] text-fg-muted">
             <span className="truncate">{portrait.src}</span>
             <span className="uppercase tracking-[0.14em]">
-              {hasPortrait ? "loaded" : "placeholder"}
+              loaded
             </span>
           </div>
         </figure>
