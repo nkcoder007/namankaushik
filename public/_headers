@@ -1,0 +1,15 @@
+# Cloudflare Pages response headers for the static export.
+#
+# This file is copied verbatim to out/_headers by `next build`. It replaces the
+# `headers()` configuration that static export cannot apply: Cloudflare reads
+# these rules itself and sends them on every route, including 404s and the
+# hashed files under /_next/.
+#
+# Same four headers, same values as before. Still no Content-Security-Policy:
+# the theme and reveal gates run as inline scripts in <head>.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
