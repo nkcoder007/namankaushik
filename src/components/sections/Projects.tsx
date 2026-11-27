@@ -50,7 +50,7 @@ function ProjectPlaceholders() {
           <li key={placeholder.slot}>
             <article className="flex h-full flex-col border border-border bg-surface">
               <div className="flex flex-1 flex-col px-5 py-5">
-                <span className="flex items-center justify-between gap-3 font-mono text-[10.5px] tracking-[0.18em] uppercase">
+                <span className="flex items-center justify-between gap-3 font-mono text-[12px] tracking-[0.18em] uppercase">
                   <span className="flex min-w-0 items-center gap-2 text-fg-muted">
                     <span aria-hidden="true" className="size-1 shrink-0 bg-border-strong" />
                     <span className="truncate">placeholder</span>
@@ -68,7 +68,7 @@ function ProjectPlaceholders() {
                   {placeholder.detail}
                 </span>
 
-                <span className="-mx-5 mt-auto flex items-center justify-between gap-3 border-t border-border px-5 pt-3 font-mono text-[10.5px] tracking-[0.16em] uppercase">
+                <span className="-mx-5 mt-auto flex items-center justify-between gap-3 border-t border-border px-5 pt-3 font-mono text-[12px] tracking-[0.16em] uppercase">
                   <span className="text-fg-muted">upcoming</span>
                   <span
                     aria-hidden="true"

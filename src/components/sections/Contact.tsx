@@ -10,7 +10,7 @@ import { contact, type ContactDestination } from "@/data/contact";
 // edge, the same convention every other section uses.
 const composition = "mx-auto w-full max-w-[60rem]";
 
-const labelBase = "font-mono text-[10.5px] tracking-[0.2em] uppercase";
+const labelBase = "font-mono text-[12px] tracking-[0.2em] uppercase";
 
 const destinations: readonly ContactDestination[] = [contact.email, ...contact.socials];
 
@@ -80,7 +80,7 @@ export function Contact() {
             data-reveal-item
             data-reveal-step="1"
             onClick={() => setOpen((value) => !value)}
-            className="group mt-10 inline-flex min-h-12 items-center gap-3 bg-accent px-6 font-mono text-[11px] tracking-[0.18em] text-accent-contrast uppercase transition-colors duration-150 hover:bg-accent-strong focus-visible:outline-offset-4 sm:mt-12 sm:min-h-13 sm:px-7 sm:text-[12px]"
+            className="group mt-10 inline-flex min-h-12 items-center gap-3 bg-accent px-6 font-mono text-[12px] tracking-[0.18em] text-accent-contrast uppercase transition-colors duration-150 hover:bg-accent-strong focus-visible:outline-offset-4 sm:mt-12 sm:min-h-13 sm:px-7"
           >
             {contact.actionLabel}
             <span
@@ -114,7 +114,7 @@ export function Contact() {
                   <button
                     type="button"
                     onClick={close}
-                    className="inline-flex min-h-11 items-center gap-2 px-2 font-mono text-[10.5px] tracking-[0.18em] text-fg-muted uppercase transition-colors duration-150 hover:text-accent focus-visible:outline-offset-2 sm:min-h-10"
+                    className="inline-flex min-h-11 items-center gap-2 px-2 font-mono text-[12px] tracking-[0.18em] text-fg-muted uppercase transition-colors duration-150 hover:text-accent focus-visible:outline-offset-2 sm:min-h-10"
                   >
                     {contact.closeLabel}
                     <span aria-hidden="true" className="text-[13px] leading-none">

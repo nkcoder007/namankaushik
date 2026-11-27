@@ -26,7 +26,7 @@ const compositionWidth = "mx-auto w-full max-w-[61rem]";
 // to match in height and border, and differ only in fill: the credential is
 // filled, the certificate outlined.
 const entryAction =
-  "inline-flex min-h-10 items-center border px-4 font-mono text-[10.5px] tracking-[0.16em] uppercase transition-colors duration-150 focus-visible:outline-offset-4";
+  "inline-flex min-h-10 items-center border px-4 font-mono text-[12px] tracking-[0.16em] uppercase transition-colors duration-150 focus-visible:outline-offset-4";
 
 const entries = experience.entries;
 
@@ -152,7 +152,7 @@ export function Experience() {
                       : "invisible",
                   ].join(" ")}
                 >
-                  <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-border bg-surface px-5 py-2.5 font-mono text-[10.5px] tracking-[0.18em] uppercase sm:px-7 lg:px-8">
+                  <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 border-b border-border bg-surface px-5 py-2.5 font-mono text-[12px] tracking-[0.18em] uppercase sm:px-7 lg:px-8">
                     <span className="flex min-w-0 flex-wrap items-center gap-x-2.5 gap-y-1">
                       <span className={toneText[entry.tone]}>{entry.category}</span>
 
@@ -280,7 +280,7 @@ function EntryDetails({ details }: { details: ExperienceDetails }) {
           <div className="min-w-0">
             {details.outcomes?.length ? (
               <>
-                <p className="font-mono text-[10.5px] tracking-[0.18em] text-fg-secondary uppercase">
+                <p className="font-mono text-[12px] tracking-[0.18em] text-fg-secondary uppercase">
                   {details.outcomeLabel ?? "outcomes"}
                 </p>
                 <ul className="mt-1.5 space-y-1.5">
@@ -366,7 +366,7 @@ function DocumentButton({ file }: { file: ExperienceDocument }) {
 function DetailGroup({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div>
-      <p className="font-mono text-[10.5px] tracking-[0.18em] text-fg-secondary uppercase">
+      <p className="font-mono text-[12px] tracking-[0.18em] text-fg-secondary uppercase">
         {label}
       </p>
       <div className="mt-2.5">{children}</div>

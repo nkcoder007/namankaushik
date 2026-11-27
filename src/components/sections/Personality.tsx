@@ -46,10 +46,11 @@ export function Personality() {
                   <button
                     type="button"
                     aria-describedby={descriptionId}
+                    aria-pressed={isActive}
                     onPointerEnter={() => setActive(index)}
                     onFocus={() => setActive(index)}
                     onClick={() => setActive(index)}
-                    className="group block max-w-full text-left focus-visible:outline-offset-4"
+                    className="group block min-h-6 max-w-full text-left focus-visible:outline-offset-4"
                   >
                     <span
                       className={[
@@ -72,7 +73,7 @@ export function Personality() {
               paragraph itself never unmounts (so the live region keeps
               announcing); only the text inside it fades. */}
           <div className="border-l border-border-strong pl-5 sm:pl-6">
-            <p className="font-mono text-[10.5px] tracking-[0.16em] text-fg-muted uppercase tabular-nums">
+            <p className="font-mono text-[12px] tracking-[0.16em] text-fg-muted uppercase tabular-nums">
               {formatIndex(active + 1)} / {formatIndex(personality.interests.length)}
               <span aria-hidden="true" className="px-1.5 text-border-strong">
                 ·
@@ -82,11 +83,7 @@ export function Personality() {
               </span>
             </p>
 
-            <p
-              id={descriptionId}
-              aria-live="polite"
-              className="mt-3 min-h-[6.5rem] max-w-[26rem] sm:min-h-[5.5rem]"
-            >
+            <p id={descriptionId} className="mt-3 min-h-[6.5rem] max-w-[26rem] sm:min-h-[5.5rem]">
               <span
                 key={current.id}
                 className="block animate-[detail-fade-in_200ms_ease-out] text-[15px] leading-7 text-fg-secondary sm:text-base sm:leading-8"
