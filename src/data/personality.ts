@@ -11,45 +11,49 @@ export type PersonalityInterest = {
  * The composition reads top to bottom in this order, so the sequence is fixed
  * here rather than in the component. The six labels are set at different
  * scales: editing the copy must not break the rhythm, so keep each one short.
+ *
+ * Every description is first person and about the same length: a plain
+ * statement about the interest, then one concrete detail (a list of favorites,
+ * a tool, a book). Keep that shape when editing so the panel never jumps in
+ * length and the six readings sound like one voice.
  */
 export const personality = {
-  
   interests: [
     {
       id: "gaming",
       label: "Gaming",
       description:
-        "I enjoy playing various kinds of games in my free time to relax as a great substitute for doom-scrolling. Some of my favorites include Minecraft, Fortnite, Roblox, Spider-Man Remastered, etc.",
+        "I play a lot of different games to unwind — a better use of free time than doom-scrolling. Some favorites are Minecraft, Fortnite, Roblox and Spider-Man Remastered.",
     },
     {
       id: "anime",
       label: "Anime",
       description:
-        "Another great passtime (Anime is NOT a cartoon). My favorites include One Piece, Jojo's Bizarre Adventure, Attack on Titan, Jujutsu Kaisen, and more. ",
+        "Anime is another great pastime (and no, it is not a cartoon). My favorites are One Piece, JoJo's Bizarre Adventure, Attack on Titan and Jujutsu Kaisen, though that list keeps growing.",
     },
     {
       id: "reading",
       label: "Reading",
       description:
-        "Whether it is fiction or non-fiction, I enjoy reading books as long as they interest me. The ones that stood out to me are Atomic Habits and Land of Stories.",
+        "I read fiction and non-fiction alike, as long as the book holds my attention. Atomic Habits and Land of Stories are the two that stood out.",
     },
     {
       id: "video-editing",
       label: "Video Editing",
       description:
-        "This is one of the few creative skills I can spend hours perfecting a single video. My primary tool is Davinci Resolve.",
+        "Video editing is one of the few creative skills where I can spend hours perfecting a single video. DaVinci Resolve is my main tool.",
     },
     {
       id: "strength-training",
       label: "Strength Training",
       description:
-        "One consistent habit improves discipline and mood. 'I enjoy taking care of my health' is what I would have said in an interview. My true goal is to be buff like The Rock.",
+        "Keeping one consistent habit has improved my discipline and mood. 'I enjoy taking care of my health' is what I would have said in an interview. My true goal is to be buff like The Rock.",
     },
     {
       id: "cooking",
       label: "Cooking",
       description:
-        "Cooking is amazing as it allows me to get my mind off of the chaotic world around. Food is comfort.",
+        "Cooking is how I switch off from everything else going on. Food is comfort.",
     },
   ],
 } as const;
