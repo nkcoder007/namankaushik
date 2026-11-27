@@ -132,8 +132,6 @@ const entries: readonly Project[] = [
 export const projects = entries;
 
 export const projectsCopy = {
-  intro:
-    "A record of projects worth showing — open a card for what it does, what it was built with, and where the code or a running version can be found.",
   note: "Temporary demonstration fixtures for layout review only; these placeholder records are removed before any real project is listed.",
   emptyState: {
     label: "empty index",

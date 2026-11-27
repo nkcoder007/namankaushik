@@ -7,6 +7,7 @@ import { SectionShell } from "@/components/sections/SectionShell";
 import { about, portrait, profile } from "@/data/profile";
 
 const portraitFile = path.join(process.cwd(), "public", portrait.src);
+const portraitFilename = portrait.src.split("/").pop();
 
 // 27rem portrait + 3.5rem column gap + 38rem text at xl, so the composition box matches its content.
 const compositionWidth = "max-w-[68.5rem]";
@@ -33,7 +34,7 @@ export function About() {
           <figcaption className="flex items-center justify-between gap-3 border-b border-border bg-bg-subtle px-3.5 py-2">
             <span className="flex items-center gap-2 font-mono text-xs text-fg-secondary">
               <span aria-hidden="true" className="size-1.5 shrink-0 bg-syntax-teal" />
-              portrait.jpg
+              {portraitFilename}
             </span>
             <span className="font-mono text-[11px] tracking-[0.14em] text-fg-muted uppercase">
               4:5

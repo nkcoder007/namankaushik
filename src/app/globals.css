@@ -94,7 +94,7 @@
   --grid-line: rgb(16 20 27 / 0.075);
 }
 
-/* Detail surfaces (project dialog, personality overlay): entrance only — the
+/* Detail surfaces (project dialog): entrance only — the
    resting state needs no fill mode, so the panel stays visible even if the
    animation never runs. Opacity plus a short rise, no scaling. */
 @keyframes project-dialog-in {
@@ -115,27 +115,6 @@
 @keyframes detail-fade-in {
   from {
     opacity: 0;
-  }
-}
-
-/* Personality conveyor. Each track holds two identical sequences, so shifting
-   it by exactly half its width lands on identical pixels: the loop has no seam
-   and no gap. Direction is the only difference between the two keyframes. */
-@keyframes personality-row-left {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-@keyframes personality-row-right {
-  from {
-    transform: translate3d(-50%, 0, 0);
-  }
-  to {
-    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -196,7 +175,7 @@
                                                      transparent, text paints
                                                      above layer 2
      5  navigation and overlays  z-index 50 (header), 60 (skip link),
-                                 80 (project and personality dialogs)
+                                 80 (project dialog)
 
    The mascot is a direct child of <body>: `position: fixed; inset: 0;
    z-index: -1; pointer-events: none`. Negative layers paint above the root
@@ -339,23 +318,3 @@ html[data-reveal="pending"] [data-reveal-item],
   }
 }
 
-/* Reduced motion: the conveyor stops and becomes a static strip that scrolls
-   sideways. The duplicate sequence is dropped, so each frame appears once and
-   every frame stays reachable by keyboard. Unlayered on purpose — this has to
-   beat the `overflow` utility and the inline animation set on the track. */
-@media (prefers-reduced-motion: reduce) {
-  .personality-row {
-    overflow-x: auto;
-    overflow-y: hidden;
-    overscroll-behavior-x: contain;
-  }
-
-  .personality-track {
-    animation: none !important;
-    transform: none !important;
-  }
-
-  .personality-sequence[aria-hidden="true"] {
-    display: none;
-  }
-}

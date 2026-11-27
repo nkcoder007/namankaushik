@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 /**
- * The mascot artwork: the Straw Hat Jolly Roger already stored in `public/images/`.
+ * The mascot artwork: the Minecraft crafting table stored in `public/images/`.
  *
  * This component is presentation only. The layer, positioning, opacity and
  * motion live in `Mascot.tsx`, so the artwork can be swapped again without
@@ -11,7 +11,7 @@ import Image from "next/image";
 export function MascotArt() {
   return (
     <Image
-      src="/images/onepiecejollyroger.png"
+      src="/images/minecraft-crafting-table-1.png"
       alt=""
       width={256}
       height={256}

@@ -33,14 +33,6 @@ export function SiteFooter() {
             </span>
           </a>
         </div>
-
-        {/* Artwork attribution: kept to the quietest type step so it sits under
-            the footer content rather than competing with it. */}
-        <p className="mt-6 max-w-[54rem] font-mono text-[10.5px] leading-[1.7] text-fg-muted">
-          One Piece and its associated artwork belong to their respective rights holders. This is
-          an unofficial fan-made use and is not affiliated with or endorsed by the rights
-          holders.
-        </p>
       </Container>
     </footer>
   );

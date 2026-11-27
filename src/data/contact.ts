@@ -2,13 +2,10 @@ export type ContactDestination = {
   id: string;
   /** Platform name shown in the section. */
   label: string;
-  /**
-   * What the entry shows when there is no destination yet — explicit
-   * placeholder copy, never a stand-in address or handle.
-   */
+  /** What the entry shows: the address, or the platform and handle. */
   value: string;
   /**
-   * Real destination only. Use `mailto:` for the email address. When it is
+   * Real destination. Use `mailto:` for the email address. When it is
    * absent the entry renders as inert text: never a link, never a dead href,
    * never a focus stop.
    */
@@ -18,37 +15,25 @@ export type ContactDestination = {
 };
 
 /**
- * THE ONE EMAIL DESTINATION.
+ * THE EMAIL DESTINATION.
  *
- * No email address exists anywhere in this project, and the GitHub noreply
- * address in the commit metadata is deliberately not used — it is not a public
- * inbox. So the address is a placeholder: the panel gives it the first row,
- * marks it as a placeholder, and leaves it inert.
- *
- * To publish it, supply the real address and its href together, then drop the
- * placeholder flag:
- *
- *     value: "name@domain.com",
- *     href: "mailto:name@domain.com",
- *
- * Never invent an address.
+ * The public inbox, shown on the first row and linked with `mailto:`. Change
+ * the value and the href together so the label and the destination stay in
+ * step — never invent an address.
  */
 const email: ContactDestination = {
   id: "email",
   label: "Email",
-  value: "Address to be added",
-  placeholder: true,
+  value: "imnaman2@gmail.com",
+  href: "mailto:imnaman2@gmail.com",
 };
 
 /**
  * SECONDARY DESTINATIONS.
  *
- * Only GitHub is real: the profile owns this project's repository remote
- * (`github.com/nkcoder007/naman-portfolio`) and authored every commit in it.
- *
- * Instagram and LinkedIn have no confirmed profile anywhere in the project, so
- * they carry placeholder copy and no href. To publish one, add `href` with the
- * confirmed profile URL and drop `placeholder`.
+ * Order is the order the panel reads in. Each `value` is the platform with the
+ * handle, kept short enough to sit on one line beside its label; the href is
+ * the full profile URL.
  */
 const socials: readonly ContactDestination[] = [
   {
@@ -58,16 +43,34 @@ const socials: readonly ContactDestination[] = [
     href: "https://github.com/nkcoder007",
   },
   {
+    id: "youtube",
+    label: "YouTube",
+    value: "youtube.com/@namanRichGuy",
+    href: "https://www.youtube.com/@namanRichGuy",
+  },
+  {
     id: "instagram",
     label: "Instagram",
-    value: "Profile to be added",
-    placeholder: true,
+    value: "instagram.com/namanrichguy",
+    href: "https://www.instagram.com/namanrichguy/",
+  },
+  {
+    id: "facebook",
+    label: "Facebook",
+    value: "facebook.com/namanRichGuy",
+    href: "https://www.facebook.com/namanRichGuy",
   },
   {
     id: "linkedin",
     label: "LinkedIn",
-    value: "Profile to be added",
-    placeholder: true,
+    value: "linkedin.com/in/naman-kaushik-5445b7415",
+    href: "https://www.linkedin.com/in/naman-kaushik-5445b7415/",
+  },
+  {
+    id: "x",
+    label: "X",
+    value: "x.com/namanRichGuy",
+    href: "https://x.com/namanRichGuy",
   },
 ];
 

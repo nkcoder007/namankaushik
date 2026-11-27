@@ -17,16 +17,7 @@ export function Projects() {
       width="wide"
       headingClassName={compositionWidth}
     >
-      <div className={`mt-2 ${compositionWidth}`}>
-        <div className={`grid gap-y-3 ${metaColumns}`}>
-          <p className="font-mono text-[11px] tracking-[0.18em] text-fg-muted uppercase md:pt-1.5">
-            {projects.length} {projects.length === 1 ? "project" : "projects"}
-          </p>
-          <p className="max-w-[46rem] text-[15px] leading-7 text-fg-secondary sm:text-base sm:leading-8">
-            {projectsCopy.intro}
-          </p>
-        </div>
-
+      <div className={compositionWidth}>
         {projects.length === 0 ? <ProjectsEmpty /> : <ProjectGrid items={projects} />}
 
         <div className={`mt-8 grid ${metaColumns}`}>

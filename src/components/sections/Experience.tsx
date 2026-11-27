@@ -6,11 +6,14 @@ import { SectionShell } from "@/components/sections/SectionShell";
 import {
   experience,
   type ExperienceDetails,
+  type ExperienceDocument,
+  type ExperienceLink,
   type ExperienceTone,
 } from "@/data/experience";
 
 const toneText: Record<ExperienceTone, string> = {
   research: "text-syntax-purple",
+  hackathon: "text-syntax-orange",
   certification: "text-syntax-blue",
   teaching: "text-syntax-teal",
 };
@@ -22,6 +25,12 @@ const columns =
 // 11rem meta + 4rem gap + 46rem text column at lg, so the whole composition is
 // centered as one block while the section identifier and title stay on the rail.
 const compositionWidth = "mx-auto w-full max-w-[61rem]";
+
+// One shape for both entry actions. The credential and certificate buttons have
+// to match in height and border, and differ only in fill: the credential is
+// filled, the certificate outlined.
+const entryAction =
+  "inline-flex min-h-10 items-center border px-4 font-mono text-[10.5px] tracking-[0.16em] uppercase transition-colors duration-150 focus-visible:outline-offset-4";
 
 const entries = experience.entries;
 
@@ -76,17 +85,8 @@ export function Experience() {
       headingClassName={compositionWidth}
       surface="solid"
     >
-      <div className={`mt-2 ${compositionWidth}`}>
-        <div data-reveal-item data-reveal-step="0" className={`grid gap-y-3 ${columns}`}>
-          <p className="font-mono text-[11px] tracking-[0.18em] text-fg-muted uppercase md:pt-1.5">
-            {entries.length} entries
-          </p>
-          <p className="max-w-[46rem] text-[15px] leading-7 text-fg-secondary sm:text-base sm:leading-8">
-            {experience.intro}
-          </p>
-        </div>
-
-        <div className="mt-9 border-t border-border sm:mt-11 md:grid md:grid-cols-[12rem_minmax(0,1fr)] lg:grid-cols-[15rem_minmax(0,1fr)]">
+      <div className={compositionWidth}>
+        <div className="mt-6 border-t border-border sm:mt-7 md:grid md:grid-cols-[12rem_minmax(0,1fr)] lg:grid-cols-[15rem_minmax(0,1fr)]">
           <div
             role="tablist"
             aria-label="Experience entries"
@@ -190,6 +190,25 @@ export function Experience() {
                       {entry.title}
                     </h3>
 
+                    {/* Conference and dates read as the entry's second line of
+                        information, so they are set at body size in the accent
+                        instead of being tucked into the mono header strip. */}
+                    {entry.details?.venue || entry.details?.dates ? (
+                      <div className="mt-3.5 flex flex-wrap items-baseline gap-x-5 gap-y-1.5 border-l-2 border-accent pl-4">
+                        {entry.details.venue ? (
+                          <p className="text-[17px] leading-6 font-semibold tracking-tight text-fg sm:text-lg">
+                            {entry.details.venue}
+                          </p>
+                        ) : null}
+
+                        {entry.details.dates ? (
+                          <p className="font-mono text-[12px] tracking-[0.14em] text-accent uppercase tabular-nums">
+                            {entry.details.dates}
+                          </p>
+                        ) : null}
+                      </div>
+                    ) : null}
+
                     <p className="mt-4 max-w-[46rem] text-[15px] leading-7 text-fg-secondary sm:text-base sm:leading-8">
                       {entry.summary}
                     </p>
@@ -209,6 +228,12 @@ export function Experience() {
                     ) : null}
 
                     {entry.details ? <EntryDetails details={entry.details} /> : null}
+
+                    {entry.link ? (
+                      <div className="mt-6">
+                        <EntryLink link={entry.link} />
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               );
@@ -234,8 +259,8 @@ function EntryDetails({ details }: { details: ExperienceDetails }) {
     Boolean(details.responsibilities?.length) ||
     Boolean(details.contributions?.length) ||
     Boolean(details.timeCommitment) ||
-    Boolean(details.dates) ||
-    Boolean(details.outcomes?.length);
+    Boolean(details.outcomes?.length) ||
+    Boolean(details.document);
 
   if (!hasDetail) return null;
 
@@ -261,32 +286,85 @@ function EntryDetails({ details }: { details: ExperienceDetails }) {
         </DetailGroup>
       ) : null}
 
-      {details.dates ? (
-        <DetailGroup label="dates">
-          <p className="font-mono text-[12.5px] leading-6 text-fg-secondary">
-            {details.dates}
-          </p>
-        </DetailGroup>
-      ) : null}
+      {/* Outcome and its document share one row: the award sits on the left,
+          the file button on the right, so the pair costs one line and not two. */}
+      {details.outcomes?.length || details.document ? (
+        <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+          <div className="min-w-0">
+            {details.outcomes?.length ? (
+              <>
+                <p className="font-mono text-[10.5px] tracking-[0.18em] text-fg-secondary uppercase">
+                  {details.outcomeLabel ?? "outcomes"}
+                </p>
+                <ul className="mt-1.5 space-y-1.5">
+                  {details.outcomes.map((outcome) => (
+                    <li
+                      key={outcome}
+                      className="flex gap-2.5 text-[15px] leading-6 font-medium text-fg"
+                    >
+                      <span aria-hidden="true" className="mt-2.5 size-1 shrink-0 bg-accent" />
+                      {outcome}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
 
-      {details.outcomes?.length ? (
-        <DetailGroup label={details.outcomeLabel ?? "outcomes"}>
-          <ul className="space-y-2">
-            {details.outcomes.map((outcome) => (
-              <li key={outcome} className="flex gap-2.5 text-[15px] leading-7 text-fg-secondary">
-                <span aria-hidden="true" className="mt-3 size-1 shrink-0 bg-accent" />
-                {outcome}
-              </li>
-            ))}
-          </ul>
-          {details.pendingDetails ? (
-            <p className="mt-2 font-mono text-[11px] leading-5 text-fg-muted">
-              {details.pendingDetails}
-            </p>
-          ) : null}
-        </DetailGroup>
+            {details.pendingDetails ? (
+              <p className="mt-1.5 font-mono text-[11px] leading-5 text-fg-muted">
+                {details.pendingDetails}
+              </p>
+            ) : null}
+          </div>
+
+          {details.document ? <DocumentButton file={details.document} /> : null}
+        </div>
       ) : null}
     </div>
+  );
+}
+
+/**
+ * Outbound link to more information. Until a URL is supplied in the data the
+ * label stays visible as a placeholder, the same way contact destinations do.
+ */
+function EntryLink({ link }: { link: ExperienceLink }) {
+  // Same shape as the certificate button; the accent fill makes it the primary
+  // action of the panel without changing its size or border.
+  if (!link.href) {
+    return (
+      <span className={`${entryAction} border-border-strong text-fg-secondary`}>
+        {link.label}
+        <span className="ml-2.5 text-[9.5px] tracking-[0.14em] text-fg-muted">placeholder</span>
+      </span>
+    );
+  }
+
+  return (
+    <a
+      href={link.href}
+      target="_blank"
+      rel="noreferrer noopener"
+      className={`${entryAction} border-accent bg-accent text-accent-contrast hover:border-accent-strong hover:bg-accent-strong`}
+    >
+      {link.label}
+      <span className="sr-only"> (opens in a new tab)</span>
+    </a>
+  );
+}
+
+/** Opens a public entry document (the conference certificate) in a new tab. */
+function DocumentButton({ file }: { file: ExperienceDocument }) {
+  return (
+    <a
+      href={file.href}
+      target="_blank"
+      rel="noreferrer noopener"
+      className={`${entryAction} border-border-strong text-fg hover:border-accent hover:text-accent`}
+    >
+      {file.label}
+      <span className="sr-only"> (opens in a new tab)</span>
+    </a>
   );
 }
 
