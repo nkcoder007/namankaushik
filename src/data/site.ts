@@ -1,6 +1,6 @@
 export const site = {
   name: "Naman Kaushik",
-  role: "Software Developer",
+  role: "Student Developer",
 } as const;
 
 export const sections = [
