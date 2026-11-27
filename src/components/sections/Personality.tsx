@@ -35,7 +35,7 @@ export function Personality() {
         <div
           data-reveal-item
           data-reveal-step="0"
-          className="mt-4 grid gap-8 border-t border-border pt-8 sm:mt-5 sm:pt-10 lg:mt-6 lg:grid-cols-[minmax(0,1fr)_16rem] lg:items-start lg:gap-12 xl:gap-16"
+          className="mt-4 grid gap-8 border-t border-border pt-8 sm:mt-5 sm:pt-10 lg:mt-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start lg:gap-12 xl:grid-cols-[minmax(0,1fr)_22rem] xl:gap-16"
         >
           <ul className="space-y-1.5 sm:space-y-2">
             {personality.interests.map((interest, index) => {

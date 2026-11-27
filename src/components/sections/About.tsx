@@ -29,7 +29,7 @@ export function About() {
         <figure
           data-reveal-item
           data-reveal-step="0"
-          className="mx-auto w-full max-w-[22rem] border border-border bg-surface md:mx-0 md:max-w-none"
+          className="mx-auto w-full max-w-[22rem] border border-border bg-surface md:mx-0 md:max-w-none md:self-start lg:self-center"
         >
           <figcaption className="flex items-center justify-between gap-3 border-b border-border bg-bg-subtle px-3.5 py-2">
             <span className="flex items-center gap-2 font-mono text-xs text-fg-secondary">
