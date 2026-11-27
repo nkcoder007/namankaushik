@@ -1,142 +1,204 @@
+/**
+ * PROJECT CONTENT — read this before adding an entry.
+ *
+ * This file feeds `components/sections/Projects.tsx`, which renders either the
+ * real grid (`ProjectGrid` + `ProjectDialog`) or, while nothing is documented,
+ * the placeholder slots defined at the bottom of this file.
+ *
+ * ---------------------------------------------------------------------------
+ * ADDING A REAL PROJECT
+ * ---------------------------------------------------------------------------
+ * Append one object to `entries` below. Nothing else changes: no component
+ * edits, no new files, no schema changes. The grid maps `entries` in array
+ * order, so the array order is the order of the cards on the page, and each
+ * card's position number (`01`, `02`, …) is derived from its index.
+ *
+ * The moment `entries` is non-empty, the placeholders disappear — they are a
+ * fallback for an empty `entries`, not records that sit beside real work.
+ *
+ *     const entries: readonly Project[] = [
+ *       {
+ *         id: "sense-map",
+ *         title: "SenseMap",
+ *         category: "AI/ML",
+ *         summary: "One line, shown on the card.",
+ *         overview: "The longer purpose and scope, shown in the dialog.",
+ *         role: "Solo build",
+ *         timeframe: "October 2026",
+ *         status: "In progress",
+ *         contributions: ["What I built.", "What I owned."],
+ *         features: ["What it does for a user."],
+ *         details: "Constraints, trade-offs, anything worth remembering.",
+ *         technologies: ["TypeScript", "Next.js", "PostgreSQL"],
+ *         repositoryUrl: "https://github.com/user/repo",
+ *         liveUrl: "https://example.com",
+ *       },
+ *     ];
+ *
+ * Only `id`, `title`, `category` and `summary` are required. Everything else
+ * is optional and is simply left out of both the card and the dialog when it is
+ * absent — never filled with placeholder text, never invented.
+ *
+ * ---------------------------------------------------------------------------
+ * HOW THE CARD USES THESE FIELDS
+ * ---------------------------------------------------------------------------
+ * Collapsed card (`ProjectCard` in `ProjectGrid.tsx`):
+ *   - header strip … `category` on the left; `featured` (accent) or the
+ *                    position number on the right
+ *   - title ……… `title`
+ *   - body ……… `summary`, clamped to three lines
+ *   - footer ……… the first three `technologies`, then `+N` if there are more;
+ *                a "details" strip with a `+` appears only when the project has
+ *                anything further to show.
+ *
+ * A project with no optional fields at all still renders as a complete, plain
+ * card: it gets no "details" strip, is not a button, and opens no dialog.
+ *
+ * ---------------------------------------------------------------------------
+ * HOW THE DIALOG USES THESE FIELDS
+ * ---------------------------------------------------------------------------
+ * Clicking a card with more content opens `ProjectDialog` (a portal on the page
+ * with focus trapping, Escape to close and focus returned to the card).
+ *
+ *   Header ……… "project / category / status", then `title`
+ *   Main column … `overview`, then `contributions`, `features` and `details`
+ *                  as labelled groups, in that order
+ *   Side column … `role`, `timeframe`, the full `technologies` list, `links`
+ *
+ * If none of `overview`, `contributions`, `features` or `details` is set, the
+ * main column shows `summary` under a "summary" heading instead.
+ *
+ * ---------------------------------------------------------------------------
+ * LINKS (repository and live demo)
+ * ---------------------------------------------------------------------------
+ * Both links live only in the dialog's side column; the card face never shows
+ * them. Supply each as a full absolute `https://` URL:
+ *
+ *   repositoryUrl … the source repository  → rendered as "Repository"
+ *   liveUrl ……… the deployed/demo build → rendered as "Live"
+ *
+ * Both are optional and independent, so there are three valid cases:
+ *   - both ......... both links render, "Live" first
+ *   - one only ..... that single link renders on its own; leave the other
+ *                    field out entirely (do not pass "" or "#")
+ *   - neither ...... the whole "links" block is omitted from the dialog
+ *
+ * Every supplied link opens in a new tab. There is no placeholder-link mode:
+ * a project is either documented with a URL that really exists, or the field
+ * stays absent.
+ *
+ * ---------------------------------------------------------------------------
+ * RULES
+ * ---------------------------------------------------------------------------
+ * - No demo, fixture or invented records: only documented work belongs here.
+ * - `id` is the React key and the dialog's aria id prefix, so keep it a unique,
+ *   URL-safe slug and never reuse a retired one.
+ * - `summary` is the only field read by search engines and card listings; keep
+ *   it one sentence that says what the project actually does.
+ * - `featured: true` gives a card the accent rule and the "featured" label.
+ *   Mark at most one, so the emphasis stays meaningful.
+ * - `status` and `timeframe` are shown only in the dialog. Fill them from
+ *   verified information, or leave them out.
+ * - Placeholders for undocumented work belong in `projectPlaceholders` below,
+ *   never in `entries`.
+ */
 export type Project = {
-  /** Stable slug, used as the React key. */
+  /** REQUIRED. Unique slug: React key and the dialog's aria id prefix. */
   id: string;
+  /** REQUIRED. Card title, and the dialog heading. */
   title: string;
-  /** Software Development, AI/ML, Research, Game Development, … */
+  /** REQUIRED. Short kind label on the card header, e.g. "AI/ML", "Game Development". */
   category: string;
-  /** One-line description shown on the collapsed card. */
+  /** REQUIRED. One line on the card, clamped to three; also the dialog fallback. */
   summary: string;
-  /** Longer description and purpose, shown when the card is expanded. */
+  /** Longer purpose and scope, shown at the top of the dialog's main column. */
   overview?: string;
-  /** Your role on the project. */
+  /** Your role on the project, shown in the dialog's side column. */
   role?: string;
-  /** What you personally built or contributed. */
+  /** What you personally built or owned, as dialog bullets. */
   contributions?: readonly string[];
+  /** The stack. First three appear on the card, all of them in the dialog. */
   technologies?: readonly string[];
-  /** Key features, shown as a list when expanded. */
+  /** What the project does for a user, as dialog bullets. */
   features?: readonly string[];
-  /** Challenges or interesting implementation notes. */
+  /** Constraints, trade-offs and implementation notes, as one dialog paragraph. */
   details?: string;
+  /** Full absolute URL to the source. Rendered as "Repository" in the dialog. */
   repositoryUrl?: string;
+  /** Full absolute URL to the deployed build. Rendered as "Live" in the dialog. */
   liveUrl?: string;
-  /** Only set when a verified timeframe is available. */
+  /** Verified timeframe only, e.g. "October 2026". Dialog side column. */
   timeframe?: string;
-  /** Only set when a verified status is available (e.g. In progress). */
+  /** Verified status only, e.g. "In progress", "Shipped". Dialog header. */
   status?: string;
-  /** Gives one card the larger treatment: accent rule and a featured label. */
+  /** Accent rule plus the "featured" label on the card. Use on at most one. */
   featured?: boolean;
-  /**
-   * Temporary fixture marker. Demo records are labelled as such in the UI and
-   * never render their placeholder URLs as working external links.
-   */
-  demo?: boolean;
 };
 
 /**
- * TEMPORARY VISUAL FIXTURES — NOT PORTFOLIO CONTENT.
+ * REAL PROJECT RECORDS — the only list the grid renders.
  *
- * The three DEMO PROJECT records below exist only so the card grid can be
- * inspected before real work is documented. Every value is invented: the copy
- * is placeholder text, and the links use the reserved `.invalid` domain, which
- * never resolves in any browser. Each record is flagged `demo: true`, which
- * makes the dialog list its links as inert placeholder text instead of real
- * anchors.
- *
- * To restore the shipped state, replace the whole `entries` array with:
- *
- *     const entries: readonly Project[] = [];
- *
- * Only documented projects belong in this file — name, what it does, its stack,
- * and any repository or live link that actually exists.
+ * Empty until work is documented: the placeholder slots below stand in for it.
+ * See the block above `Project` for the exact format and how each field is used.
  */
-const entries: readonly Project[] = [
-  {
-    id: "demo-project-01",
-    demo: true,
-    title: "DEMO PROJECT 01",
-    category: "Demo / Software Development",
-    summary:
-      "Demonstration record with a longer summary, so line clamping, technology trimming and the expanded detail groups can all be reviewed on one card.",
-    overview:
-      "This card is placeholder content. It shows where a project's purpose and scope sit inside the expanded panel, and how that paragraph wraps across the full grid width on a wide viewport. Nothing described here is a real project, and no part of this text should be published.",
-    role: "Placeholder role — demo content only",
-    timeframe: "Demo timeframe — not a real date",
-    status: "Demo fixture",
-    contributions: [
-      "Placeholder contribution describing one part of the invented work.",
-      "Second placeholder contribution, long enough to wrap onto a second line inside the panel.",
-      "Third placeholder contribution used to check spacing between list items.",
-    ],
-    technologies: ["TypeScript", "React", "Next.js", "Tailwind CSS", "PostgreSQL"],
-    features: [
-      "Placeholder feature describing behaviour that does not exist.",
-      "Second placeholder feature that shows how two-line bullets sit in the list.",
-      "Third placeholder feature standing in for a real capability.",
-    ],
-    details:
-      "Placeholder notes. This block shows how implementation notes and open questions read inside the expanded card; it is temporary review copy and is removed with the rest of the fixtures.",
-    repositoryUrl: "https://example.invalid/demo-project-01/repository",
-    liveUrl: "https://example.invalid/demo-project-01/live",
-  },
-  {
-    id: "demo-project-02",
-    demo: true,
-    title: "DEMO PROJECT 02",
-    category: "Demo / Research",
-    summary:
-      "Short placeholder summary, kept deliberately brief to check how a compact description sits beside longer cards in the same row.",
-    overview:
-      "Placeholder overview for the second demonstration card. It exists to confirm that a shorter record still fills its card evenly, and that expanding it pushes the row below down instead of overlapping it.",
-    role: "Placeholder role — demo content only",
-    contributions: [
-      "Placeholder contribution for the second card.",
-      "Another placeholder contribution, framed like a research task.",
-    ],
-    technologies: ["Python", "pandas", "Jupyter"],
-    features: [
-      "Placeholder feature representing a data preparation step.",
-      "Placeholder feature representing an evaluation step.",
-    ],
-    details:
-      "Placeholder notes for the second card. No findings, results or conclusions are described here because none exist.",
-    repositoryUrl: "https://example.invalid/demo-project-02/repository",
-  },
-  {
-    id: "demo-project-03",
-    demo: true,
-    title: "DEMO PROJECT 03",
-    category: "Demo / Tooling",
-    summary:
-      "Third placeholder record, used to see a full three-column row and to check that the remaining cards stay visible while another one is expanded.",
-    overview:
-      "Placeholder overview for the third demonstration card. It carries more technology entries than the card face shows, which is how the trimmed stack and the plus-count indicator get reviewed.",
-    role: "Placeholder role — demo content only",
-    status: "Demo fixture",
-    contributions: [
-      "Placeholder contribution describing a command-line workflow.",
-      "Placeholder contribution describing how the invented tool was tested.",
-      "Placeholder contribution standing in for documentation work.",
-    ],
-    technologies: ["Go", "SQLite", "Docker", "GitHub Actions", "Make", "goreleaser"],
-    features: [
-      "Placeholder feature describing an invented command.",
-      "Placeholder feature describing invented output formatting.",
-      "Placeholder feature describing a packaging step that does not exist.",
-    ],
-    details:
-      "Placeholder notes for the third card, covering the kind of challenge usually written here: constraints, trade-offs and anything worth remembering.",
-    liveUrl: "https://example.invalid/demo-project-03/live",
-  },
-];
+const entries: readonly Project[] = [];
 
 export const projects = entries;
 
+/**
+ * PLACEHOLDER SLOTS — not project records.
+ *
+ * Shown only while `entries` is empty, so the Projects section reads as
+ * deliberately reserved rather than broken. They carry no project facts: just a
+ * slot number, a state label and one line saying the details will follow.
+ *
+ * They are rendered as static, non-interactive cards: no link, no button, no
+ * dialog, and the whole grid is hidden from assistive technology, which is told
+ * about the state in one sentence instead. Nothing here is a real project, so
+ * search engines see no project names, headings or URLs to index.
+ *
+ * Delete the three objects (or empty the array) to remove the slots entirely.
+ * They are never mixed into `projects`.
+ */
+export type ProjectPlaceholder = {
+  /** Position number shown in the card header, e.g. 1 → "01". */
+  slot: number;
+  /** Restrained state label, e.g. "Coming Soon" or "In Development". */
+  state: string;
+  /** One muted line under the label. No names, facts or dates. */
+  detail: string;
+};
+
+export const projectPlaceholders: readonly ProjectPlaceholder[] = [
+  {
+    slot: 1,
+    state: "Coming Soon",
+    detail: "A build will be documented here once it is finished and worth showing.",
+  },
+  {
+    slot: 2,
+    state: "In Development",
+    detail: "This slot is held for work that is still being built.",
+  },
+  {
+    slot: 3,
+    state: "Coming Soon",
+    detail: "Details, stack and links follow once the project is ready to share.",
+  },
+];
+
+/**
+ * Section copy. The note that used to sit under the grid was internal
+ * placeholder bookkeeping and is intentionally not replaced.
+ */
 export const projectsCopy = {
-  note: "Temporary demonstration fixtures for layout review only; these placeholder records are removed before any real project is listed.",
   emptyState: {
     label: "empty index",
     title: "No project records yet.",
     body: "Each card will carry what the project does, the stack it was built with, and links to a repository or live version once those are ready to share.",
     hint: "Records are added as the work is documented.",
   },
+  /** Screen-reader equivalent for the placeholder grid, which is aria-hidden. */
+  placeholdersNote:
+    "Projects are not published yet. Three reserved slots mark where they will appear.",
 } as const;

@@ -274,24 +274,14 @@ export function ProjectDialog({ project, returnFocusTo, onClose }: ProjectDialog
 
                 {project.repositoryUrl || project.liveUrl ? (
                   <Meta label="links">
-                    {project.demo ? (
-                      // Demo fixtures carry `.invalid` URLs: list them as inert
-                      // text so they never behave like working destinations.
-                      <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1.5 font-mono text-[12px] text-fg-muted">
-                        {project.liveUrl ? <span>Live</span> : null}
-                        {project.repositoryUrl ? <span>Repository</span> : null}
-                        <span className="text-[11px]">placeholder links — not published</span>
-                      </span>
-                    ) : (
-                      <span className="flex flex-wrap gap-x-5 gap-y-2">
-                        {project.liveUrl ? (
-                          <ExternalLink href={project.liveUrl}>Live</ExternalLink>
-                        ) : null}
-                        {project.repositoryUrl ? (
-                          <ExternalLink href={project.repositoryUrl}>Repository</ExternalLink>
-                        ) : null}
-                      </span>
-                    )}
+                    <span className="flex flex-wrap gap-x-5 gap-y-2">
+                      {project.liveUrl ? (
+                        <ExternalLink href={project.liveUrl}>Live</ExternalLink>
+                      ) : null}
+                      {project.repositoryUrl ? (
+                        <ExternalLink href={project.repositoryUrl}>Repository</ExternalLink>
+                      ) : null}
+                    </span>
                   </Meta>
                 ) : null}
               </aside>

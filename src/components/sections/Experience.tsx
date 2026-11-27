@@ -18,10 +18,6 @@ const toneText: Record<ExperienceTone, string> = {
   teaching: "text-syntax-teal",
 };
 
-// Shared meta/content columns so the intro and footnote sit on one track.
-const columns =
-  "md:grid-cols-[9rem_minmax(0,1fr)] md:gap-x-10 lg:grid-cols-[11rem_minmax(0,1fr)] lg:gap-x-16";
-
 // 11rem meta + 4rem gap + 46rem text column at lg, so the whole composition is
 // centered as one block while the section identifier and title stay on the rail.
 const compositionWidth = "mx-auto w-full max-w-[61rem]";
@@ -240,15 +236,6 @@ export function Experience() {
             })}
           </div>
         </div>
-
-        <div className={`mt-6 grid ${columns}`}>
-          <p className="hidden font-mono text-[11px] tracking-[0.18em] text-fg-muted uppercase md:block">
-            note
-          </p>
-          <p className="max-w-[44rem] font-mono text-[11px] leading-5 text-fg-muted">
-            {experience.note}
-          </p>
-        </div>
       </div>
     </SectionShell>
   );
@@ -307,6 +294,14 @@ function EntryDetails({ details }: { details: ExperienceDetails }) {
                     </li>
                   ))}
                 </ul>
+
+                {/* Supporting line for the outcome above, e.g. how an award was
+                    decided. It is never rendered as a second outcome. */}
+                {details.outcomeNote ? (
+                  <p className="mt-2 max-w-[42ch] text-[13px] leading-6 text-fg-muted">
+                    {details.outcomeNote}
+                  </p>
+                ) : null}
               </>
             ) : null}
 

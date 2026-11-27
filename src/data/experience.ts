@@ -17,6 +17,11 @@ export type ExperienceDetails = {
   outcomes?: readonly string[];
   /** Heading for the outcomes list, e.g. the kind of recognition. */
   outcomeLabel?: string;
+  /**
+   * Supporting sentence under the outcomes, e.g. how an award was decided. It
+   * reads as an explanation, never as a second award.
+   */
+  outcomeNote?: string;
   /** Public file offered as a button beside the outcome, e.g. a poster PDF. */
   document?: ExperienceDocument;
   /** Detail that is still unconfirmed, shown so it is easy to fill in later. */
@@ -59,24 +64,55 @@ export type ExperienceEntry = {
   /**
    * Preserved emphasis flag. The explorer signals emphasis through the accent
    * selection treatment, so this no longer changes type size or weight.
+   *
+   * ENTRIES ARE ORDERED NEWEST FIRST. The array order is the tab order, and the
+   * first entry is the one selected on load, so a newly added entry goes at the
+   * top. Only confirmed dates are used for that ordering (`details.dates`); an
+   * entry whose date is unknown sits after every dated entry rather than being
+   * given an assumed position.
    */
   featured?: boolean;
 };
 
 const entries: readonly ExperienceEntry[] = [
   {
+    id: "impacthack-2026",
+    title: "ImpactHack 2026",
+    category: "Hackathon",
+    tone: "hackathon",
+    summary:
+      "SenseMap, the submitted project: a web app that turns a restaurant's Google reviews into a 0–100 sensory-friendliness score.",
+    skills: ["AI validation", "API integration", "Full-stack"],
+    details: {
+      venue: "Online hackathon",
+      dates: "October 15, 2026",
+      contributions: [
+        "Gives a searched restaurant a sensory-friendliness score from 0 to 100, where a higher score means a calmer environment across lights, noise, crowding by hour and smell strength.",
+        "Converts messy Google reviews into sensory data, checked against real review evidence and confidence levels so invented details stay out of the score.",
+        "Brings the Google review data, the AI layer, a backend and a front end together in one app that helps people pick places suited to their sensory needs.",
+      ],
+      outcomes: ["People's Choice Award"],
+      outcomeNote: "Awarded for the most popular project by participant and community voting.",
+      outcomeLabel: "Award",
+      document: {
+        label: "View certificate (PDF)",
+        href: "/documents/impacthack-2026-peoples-choice-certificate.pdf",
+      },
+    },
+  },
+  {
     id: "quantum-error-correction",
     title: "Quantum error correction research",
     category: "Research",
     tone: "research",
     summary:
-      "Research on quantum error correction, with machine-learning algorithms applied as part of the work, presented as a poster at the research conference.",
+      "Research on quantum error correction, presented as a poster at the research conference.",
     skills: ["Quantum error correction", "Machine learning"],
     details: {
       venue: "IRCC' 26 by GYRA",
-      dates: "June 6-7, 2026",
+      dates: "June 6–7, 2026",
       contributions: [
-        "Applied machine-learning algorithms as part of the quantum error correction research.",
+        "Applied machine-learning algorithms to the error-correction work.",
         "Presented the work as a poster at the conference.",
       ],
       outcomes: ["Best Poster Presentation Award"],
@@ -89,33 +125,6 @@ const entries: readonly ExperienceEntry[] = [
     featured: true,
   },
   {
-    id: "impacthack-2026",
-    title: "ImpactHack 2026",
-    category: "Hackathon",
-    tone: "hackathon",
-    summary:
-      "SenseMap, the submitted project: a web app that turns a restaurant's Google reviews into a 0-100 sensory profile.",
-    skills: ["AI validation", "API integration", "Full-stack"],
-    details: {
-      venue: "Online hackathon",
-      dates: "October 15, 2026",
-      contributions: [
-        "Rates a searched restaurant 0-100 for sensory load (100 low, 0 high) on lights, noise, crowding by hour and smell strength.",
-        "Learned AI can turn messy Google reviews into sensory data, and needs validating: real review evidence and confidence levels keep invented details out.",
-        "Learned to stitch APIs, AI, a backend and a front end into one app that helps people pick places suiting their sensory needs.",
-      ],
-      outcomes: [
-        "People's Choice Award",
-        "Most popular project by participant and community voting.",
-      ],
-      outcomeLabel: "Award",
-      document: {
-        label: "View certificate (PDF)",
-        href: "/documents/impacthack-2026-peoples-choice-certificate.pdf",
-      },
-    },
-  },
-  {
     id: "google-ai-essentials",
     title: "Google AI Essentials",
     category: "Certification",
@@ -126,9 +135,9 @@ const entries: readonly ExperienceEntry[] = [
     skills: ["AI fundamentals", "Generative AI", "Responsible AI"],
     details: {
       contributions: [
-        "Covered a foundational understanding of AI principles through hands-on activities and assessments.",
-        "Built practical proficiency applying generative AI tools to workplace tasks, including writing effective prompts.",
-        "Demonstrated competence in integrating AI into work, and in using it responsibly.",
+        "Covers the fundamentals of how AI works, through hands-on activities and assessments.",
+        "Covers using generative AI tools for everyday work tasks, including writing effective prompts.",
+        "Includes responsible-use guidance and how to judge where AI fits into a workflow.",
       ],
     },
     link: { label: "Verify credential", href: "https://www.credly.com/badges/6a6a6600-a607-4a0e-9828-6429a47352fb/linked_in_profile" },
@@ -136,6 +145,5 @@ const entries: readonly ExperienceEntry[] = [
 ];
 
 export const experience = {
-  note: "Conference, dates and award are confirmed; the certificate opens as a PDF.",
   entries,
 } as const;
