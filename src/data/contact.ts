@@ -48,30 +48,32 @@ const socials: readonly ContactDestination[] = [
     value: "youtube.com/@namanRichGuy",
     href: "https://www.youtube.com/@namanRichGuy",
   },
-  {
-    id: "instagram",
-    label: "Instagram",
-    value: "instagram.com/namanrichguy",
-    href: "https://www.instagram.com/namanrichguy/",
-  },
-  {
-    id: "facebook",
-    label: "Facebook",
-    value: "facebook.com/namanRichGuy",
-    href: "https://www.facebook.com/namanRichGuy",
-  },
+  // Hidden from the panel on request: keep these entries commented out rather
+  // than deleted, so the handle and profile URL stay here, ready to restore.
+  // {
+  //   id: "instagram",
+  //   label: "Instagram",
+  //   value: "instagram.com/namanrichguy",
+  //   href: "https://www.instagram.com/namanrichguy/",
+  // },
+  // {
+  //   id: "facebook",
+  //   label: "Facebook",
+  //   value: "facebook.com/namanRichGuy",
+  //   href: "https://www.facebook.com/namanRichGuy",
+  // },
   {
     id: "linkedin",
     label: "LinkedIn",
     value: "linkedin.com/in/naman-kaushik-5445b7415",
     href: "https://www.linkedin.com/in/naman-kaushik-5445b7415/",
   },
-  {
-    id: "x",
-    label: "X",
-    value: "x.com/namanRichGuy",
-    href: "https://x.com/namanRichGuy",
-  },
+  // {
+  //   id: "x",
+  //   label: "X",
+  //   value: "x.com/namanRichGuy",
+  //   href: "https://x.com/namanRichGuy",
+  // },
 ];
 
 export const contact = {
